@@ -5,33 +5,35 @@ month = gets.chomp.to_i
 puts "Введите текущий год"
 year = gets.chomp.to_i
 
-if year % 4.0 == 0 && year % 100 != 0
+if year % 400.0 == 0
+  v_year = true
+elsif year % 4.0 == 0 && year % 100.0 != 0 
   v_year = true
 end
 
-months = Hash.new
-months[1] = 31
+months = []
+months << 31  #январь
 if v_year
-  months[2] = 29
+  months << 29
 else
-  months[2] = 28
+  months << 28
 end
-months[3] = 31
-months[4] = 30
-months[5] = 31
-months[6] = 30
-months[7] = 31
-months[8] = 31
-months[9] = 30
-months[10] = 31
-months[11] = 30
-months[12] = 31
+months << 31
+months << 30
+months << 31
+months << 30
+months << 31
+months << 31
+months << 30
+months << 31
+months << 30
+months << 31
 day_number = 0
-months.each do |m, d|  
-  if m < month
+months.each.with_index(1) do |d, i|  
+  if i  < month
     #прибавляем дни месяца
     day_number += d
-  elsif m == month
+  elsif i  == month
     #прибавляем к посчитанным дни текущего месяца
     day_number += day
   end

@@ -1,6 +1,6 @@
-arr = Array.new()
+arr = []
 int = 10
 while int <= 100
-  arr.push(int)
+  arr << int
   int += 5  
 end
