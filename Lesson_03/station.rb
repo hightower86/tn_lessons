@@ -1,5 +1,5 @@
 class Station 
-
+  attr_reader :station_title
   def initialize(station_title)
     @station_title = station_title
     @trains = []
@@ -17,9 +17,8 @@ class Station
     @trains.each { |t| puts t }
   end
 
-  def get_num_tr_type(tr_type)
-
+  def trains_by_type(tr_type)
     arr = @trains.find_all{ |t| t.type == tr_type } 
-    @num_tr_type = arr.size
+    arr.size
   end
 end

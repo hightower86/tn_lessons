@@ -1,8 +1,7 @@
 class Route
+  attr_reader :route
   def initialize(start_station, end_station)
     @route = [start_station, end_station]
-    @start_station = start_station
-    @end_station = end_station
   end
 
   def add_station(station)
@@ -12,10 +11,8 @@ class Route
   def del_station(station)
     if @route.include? station
       @route.delete(station)
-
     else
       puts "Станции #{station} нет в маршруте!"
-      
     end
   end
 

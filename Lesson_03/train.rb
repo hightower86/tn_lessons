@@ -1,10 +1,20 @@
 class Train
-  def initialize(num_tr, type, num_vag)
+
+  attr_reader :num_vagons
+  attr_accessor :current_station
+  attr_accessor :current_route
+ 
+  def initialize(num_tr, type, num_vagons)
     @num_tr = num_tr
-    @num_vag = num_vag
     @type = type
     @speed = 0
+    @num_vagons = num_vagons
+    @current_route = nil
+  end
 
+  def take_route(current_route)
+    puts current_route.route
+    #@current_station = current_route.first
   end
 
   def speed_up
@@ -19,29 +29,18 @@ class Train
     @speed = 0
   end
 
-  def get_num_vags
-    @num_vag
-  end
-
   def hook
-    if @speed = 0
-      @num_vag += 1
+    if @speed == 0
+      @num_vagons += 1
     end
   end
 
   def unhook
-    if @speed = 0
-      if @num_vag > 1
-        @num_vag -= 1
-      else 
-        @num_vag = 0
+    if @speed == 0
+      if @num_vagons > 0
+        @num_vagons -= 1
       end
     end
-  end
-
-  def take_route(route)
-    @route = Route.new(start_station, end_station)
-    @current_station = @route.first
   end
 
   def move_back
@@ -61,9 +60,4 @@ class Train
       puts "Станция #{@current_station} является конечной. Поезд не может двигаться вперед"
     end
   end
-
-  def current_station
-    @current_station
-  end
-
 end
