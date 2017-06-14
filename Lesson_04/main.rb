@@ -4,7 +4,6 @@ require_relative "route"
 require_relative "passenger_vagon"
 require_relative "cargo_vagon"
 
-
 class Main
   attr_reader :routes, :trains, :stations
   
@@ -40,8 +39,31 @@ class Main
     p my_train
     p trains
   end
+  def create_new_route
+    puts "Создаем новый маршрут. Введите название первой станции маршрута:"
+    first_station = gets.chomp
+    puts "Введите название последней станции маршрута:"
+    last_station = gets.chomp
+    my_route = Route.new(first_station, last_station)
+    puts "Маршрут #{my_route} создан успешно"
+    self.routes << my_route
+  end
 
-  def create_route
+  def add_station_to_route
+    my_route = select_route
+    puts "Введите название добавляемой станции в маршрут: "
+    my_route.add_station(gets.chomp)
+    p my_route
+  end
+
+  def remove_station
+    my_route = select_route
+    puts "Какую станцию из маршрута хотите удалить? (введите название): "
+    my_route.del_station(gets.chomp)
+    p my_route
+  end
+
+  def edit_route
     puts "Выберите действие с маршрутом:
     1 - Создать новый маршрут
     2 - добавить станцию в маршрут
@@ -51,23 +73,11 @@ class Main
     choise = gets.chomp.to_i
     case choise
     when 1
-      puts "Создаем новый маршрут. Введите название первой станции маршрута:"
-      first_station = gets.chomp
-      puts "Введите название последней станции маршрута:"
-      last_station = gets.chomp
-      my_route = Route.new(first_station, last_station)
-      puts "Маршрут #{my_route} создан успешно"
-      self.routes << my_route
+      create_new_route
     when 2
-      my_route = select_route
-      puts "Введите название добавляемой станции в маршрут: "
-      my_route.add_station(gets.chomp)
-      p my_route
+      add_station_to_route
     when 3
-      my_route = select_route
-      puts "Какую станцию из маршрута хотите удалить? (введите название): "
-      my_route.del_station(gets.chomp)
-      p my_route
+      remove_station
     when 0
       Exit 
     end
@@ -109,9 +119,8 @@ class Main
 
   def unhook_vagon
     my_train = select_train
-    my_train.unhook
-    my_train = select_train
-    my_train.unhook
+    my_vagon = select_vagon(my_train)
+    my_train.unhook(my_vagon)
     p my_train.vagons
   end
 
@@ -155,9 +164,16 @@ class Main
 
   def select_train
     puts "Выберите поезд из списка:"
-    trains.each_index { |t| puts "#{trains[t].num_train} - #{trains[t].to_s}" } 
+    trains.each_index { |t| puts "#{t} - #{trains[t].num_tr} - #{trains[t].type}" } 
     index_train = gets.chomp.to_i
     trains[index_train]
+  end
+
+  def select_vagon(train)
+    puts "Выберите вагон из состава:"
+    train.vagons.each_index { |i| puts "#{i} - #{train.vagons[i]}" } 
+    index_vagon = gets.chomp.to_i
+    train.vagons[index_vagon]
   end
 end
 
@@ -184,7 +200,7 @@ loop do
   when 2 
     main.create_train
   when 3 
-    main.create_route
+    main.edit_route
   when 4 
     main.direct_route
   when 5 
