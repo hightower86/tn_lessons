@@ -7,5 +7,6 @@ class CargoVagon
     @type = :cargo
     @number = number
     @manufacturer = call_manufacturer
+    register_instance
   end
 end

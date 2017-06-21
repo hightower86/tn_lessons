@@ -7,5 +7,6 @@ class PassengerVagon
     @type = :passenger
     @number = number
     @manufacturer = call_manufacturer
+    register_instance
   end
 end

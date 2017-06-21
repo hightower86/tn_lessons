@@ -3,29 +3,33 @@ module Manufacturer
     puts "Введите наименование производителя"
     manufacturer = gets.chomp
   end
-end
 
-module InstanceCounter
+  module InstanceCounter
 
-  module ClassMethods
-    @instances = 0
-    def instances
-      @instances
+    def self.included(receiver)
+      receiver.extend         ClassMethods
+      receiver.include     InstanceMethods
     end
 
-    def counter_up
-      @instances += 1
+    module ClassMethods
+      @instances = 0
+      def instances
+        @instances
+      end
+
+      def counter_up
+        if @instances == nil
+          @instances = 0
+        end
+        @instances += 1
+      end
     end
-  end
-  
-  module InstanceMethods
-    def register_instance
-      self.class.counter_up
+
+    module InstanceMethods
+      protected
+      def register_instance
+        self.class.send :counter_up
+      end
     end
-  end
-  
-  def self.included(receiver)
-    receiver.extend         ClassMethods
-    receiver.send :include, InstanceMethods
   end
 end

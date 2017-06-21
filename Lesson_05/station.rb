@@ -12,6 +12,7 @@ class Station
     @title = title
     @trains = []
     @@stations << self
+    register_instance
   end
 
   def take_train(train)
