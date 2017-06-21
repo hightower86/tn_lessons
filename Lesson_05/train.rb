@@ -1,27 +1,28 @@
 
 class Train
 
-  @@trains = {}
-  
-  def self.find(number)
-    @@trains[number]
-  end
-
   include Manufacturer
   include InstanceCounter
 
   attr_reader :current_speed, :vagons, :current_station, :current_route, :num_tr, :type, :manufacturer
+
+  @@trains = {}
 
   def initialize(num_tr, type)
     @num_tr = num_tr
     @type = type
     @current_speed = 0
     @vagons = []
-    @manufacturer = call_manufacturer
     @@trains[num_tr] = self
     register_instance
   end
 
+  
+  def self.find(number)
+    @@trains[number]
+  end
+
+  
   def take_route(route)
     @current_route = route
     @current_station = current_route.route.first

@@ -1,35 +1,42 @@
 module Manufacturer
-  def call_manufacturer
-    puts "Введите наименование производителя"
-    manufacturer = gets.chomp
+
+  def set_manufacturer(title)
+    self.manufacturer = title
   end
 
-  module InstanceCounter
+  def manufacturer
+    self.manufacturer
+  end
 
-    def self.included(receiver)
-      receiver.extend         ClassMethods
-      receiver.include     InstanceMethods
+  protected
+  attr_accessor :manufacturer
+end
+
+module InstanceCounter
+
+  def self.included(receiver)
+    receiver.extend         ClassMethods
+    receiver.include     InstanceMethods
+  end
+
+  module ClassMethods
+    
+    def instances
+      @instances
     end
 
-    module ClassMethods
-      @instances = 0
-      def instances
-        @instances
+    def counter_up
+      if @instances == nil
+        @instances = 0
       end
-
-      def counter_up
-        if @instances == nil
-          @instances = 0
-        end
-        @instances += 1
-      end
+      @instances += 1
     end
+  end
 
-    module InstanceMethods
-      protected
-      def register_instance
-        self.class.send :counter_up
-      end
+  module InstanceMethods
+    protected
+    def register_instance
+      self.class.send :counter_up
     end
   end
 end

@@ -1,5 +1,7 @@
 class Route
+  
   attr_reader :route
+
   def initialize(start_station, end_station)
     @route = [start_station, end_station]
     register_instance
