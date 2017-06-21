@@ -1,4 +1,3 @@
-
 class Train
 
   include Manufacturer

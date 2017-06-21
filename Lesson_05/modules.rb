@@ -1,15 +1,7 @@
 module Manufacturer
 
-  def set_manufacturer(title)
-    self.manufacturer = title
-  end
-
-  def manufacturer
-    self.manufacturer
-  end
-
-  protected
   attr_accessor :manufacturer
+
 end
 
 module InstanceCounter
@@ -26,9 +18,7 @@ module InstanceCounter
     end
 
     def counter_up
-      if @instances == nil
-        @instances = 0
-      end
+      @instances ||= 0
       @instances += 1
     end
   end
