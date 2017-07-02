@@ -2,6 +2,7 @@ require_relative "modules"
 require_relative "train"
 require_relative "station"
 require_relative "route"
+require_relative "vagon"
 require_relative "passenger_vagon"
 require_relative "cargo_vagon"
 
